@@ -59,7 +59,7 @@ public class ShortenedUrlControllerTest {
         mockMvc.perform(
                         post("/url/short")
                                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .content(getJsonStringFromResource("url/UrlRequest.json")))
+                                .content(getJsonStringFromResource("test/json/UrlRequest.json")))
                 .andDo(print())
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.url", containsString("http://bit.ly/SaaYw5")))
@@ -71,7 +71,7 @@ public class ShortenedUrlControllerTest {
         mockMvc.perform(
                         post("/url/short")
                                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .content(getJsonStringFromResource("url/BlankUrlRequest.json")))
+                                .content(getJsonStringFromResource("test/json/BlankUrlRequest.json")))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", containsString(messageSource.getMessage(ServiceMessage.ValidationMessageSourceCode.URL_NOT_EMPTY, null, Locale.ENGLISH))));
@@ -82,7 +82,7 @@ public class ShortenedUrlControllerTest {
         mockMvc.perform(
                         post("/url/short")
                                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .content(getJsonStringFromResource("url/MalformedUrlRequest.json")))
+                                .content(getJsonStringFromResource("test/json/MalformedUrlRequest.json")))
                 .andDo(print())
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.message", containsString(messageSource.getMessage(ServiceMessage.ValidationMessageSourceCode.URL_NOT_VALID, null, Locale.ENGLISH))));
@@ -94,7 +94,7 @@ public class ShortenedUrlControllerTest {
         mockMvc.perform(
                         post("/url/short")
                                 .header(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                                .content(getJsonStringFromResource("url/UrlRequest.json")))
+                                .content(getJsonStringFromResource("test/json/UrlRequest.json")))
                 .andDo(print())
                 .andExpect(status().is5xxServerError())
                 .andExpect(jsonPath("$.message", containsString(messageSource.getMessage(ServiceMessage.BusinessMessageSourceCode.URL_SERVICE_EXCEPTION, null, Locale.ENGLISH))));
