@@ -84,11 +84,11 @@ Working with dockerfile
 
 6. Build docker image as below :
 
-   `docker build . -t shortened-url-service:latest`
+   `docker build . -t sourabhgmti/shortened-url-service:latest`
 
 
 7. You can check if image is pushed into local repository with the help of following command :
-   docker images
+   `docker images`
    
    for example output :
 
@@ -97,11 +97,11 @@ Working with dockerfile
 
    `REPOSITORY              TAG       IMAGE ID       CREATED          SIZE`
 
-   `shortened-url-service   latest    c5c4810b444e   47 minutes ago   153MB`
+   `sourabhgmti/shortened-url-service   latest    c5c4810b444e   47 minutes ago   153MB`
 
 8. Now run docker images :
 
-   `docker run -d --name shortened-url-app -p 8080:8080 -t shortened-url-service`
+   `docker run -d --name shortened-url-app -p 8080:8080 -t sourabhgmti/shortened-url-service`
 
 
     Now our application is up and running as a container and can be checked by executing endpoints that we exposed. For example :
@@ -109,7 +109,7 @@ Working with dockerfile
 
   docker run command output :
 
-  `PS E:\StudyWorkspace\shortened-url-service> docker run -d --name shortened-url-app -p 8080:8080 -t shortened-url-service
+  `PS E:\StudyWorkspace\shortened-url-service> docker run -d --name shortened-url-app -p 8080:8080 -t sourabhgmti/shortened-url-service
   c5c4810b444e72eaef18cabd70b5e4d403825f919903ae8a384821e34bba5222`
 
 9. We can verify docker container with command :
@@ -120,8 +120,8 @@ Working with dockerfile
     for example :
 
     PS E:\StudyWorkspace\shortened-url-service> docker container  list
-    CONTAINER ID   IMAGE                   COMMAND                  CREATED         STATUS         PORTS                                       NAMES
-    c5c4810b444e   shortened-url-service   "java -Dspring.profi…"   8 seconds ago   Up 4 seconds   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   shortened-url-app
+    CONTAINER ID   IMAGE                                     COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+    c5c4810b444e   sourabhgmti/shortened-url-service   "java -Dspring.profi…"   8 seconds ago   Up 4 seconds   0.0.0.0:8080->8080/tcp, :::8080->8080/tcp   shortened-url-app
 
 10. Application logs can be checked using command :
 
@@ -129,7 +129,7 @@ Working with dockerfile
 
 11. To login into container we have :
 
-   ` docker exec -it shortened-url-app sh`
+   ` docker exec -it sourabhgmti/shortened-url-service sh`
 
 12. we can push docker image with following command :
 
