@@ -13,6 +13,10 @@ import java.util.Locale;
 @Configuration
 public class AppConfiguration {
 
+    /**
+     *
+     * @return
+     */
     @Bean(name = "messageSource")
     public MessageSource messageSource() {
         ReloadableResourceBundleMessageSource messageSource
@@ -23,6 +27,10 @@ public class AppConfiguration {
         return messageSource;
     }
 
+    /**
+     * 
+     * @return
+     */
     @Bean
     public LocaleResolver localeResolver() {
         SessionLocaleResolver localeResolver = new SessionLocaleResolver();

@@ -22,6 +22,11 @@ public class ShortenedUrlController {
 
     private final UrlService urlServiceImpl;
 
+    /**
+     *
+     * @param urlRequest
+     * @return
+     */
     @PostMapping("/short")
     public ResponseEntity<UrlResponse> generateAndGetShortURL(@RequestBody UrlRequest urlRequest) {
         UrlResponse urlResponse = urlServiceImpl.persistentUrlDetails(urlRequest.getUrl());
@@ -31,6 +36,11 @@ public class ShortenedUrlController {
                 .body(urlResponse);
     }
 
+    /**
+     *
+     * @param urlIdentifier
+     * @return
+     */
     @GetMapping("/{urlIdentifier}")
     public ResponseEntity<Object> redirectToActualUrl(@PathVariable String urlIdentifier) {
         UrlResponse urlResponse=urlServiceImpl.getUrlResponseByUrlIdentifier(urlIdentifier);
@@ -40,6 +50,11 @@ public class ShortenedUrlController {
                 .build();
     }
 
+    /**
+     * 
+     * @param urlIdentifier
+     * @return
+     */
     @GetMapping("/{urlIdentifier}/stat")
     public ResponseEntity<Object> getUrlStatisticsByUrlIdentifier(@PathVariable String urlIdentifier) {
         UrlStatistics urlStatistics=urlServiceImpl.getUrlStatisticsByUrlIdentifier(urlIdentifier);

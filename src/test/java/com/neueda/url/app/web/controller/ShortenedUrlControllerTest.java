@@ -1,7 +1,7 @@
 package com.neueda.url.app.web.controller;
 
 
-import com.neueda.url.app.ShortenedUrlApplication;
+import com.neueda.url.app.AbstractTest;
 import com.neueda.url.app.entities.UrlEntity;
 import com.neueda.url.app.mapstruct.UrlMapStructMapper;
 import com.neueda.url.app.message.ServiceMessage;
@@ -11,13 +11,11 @@ import com.neueda.url.app.repository.ShortenedUrlRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.MessageSource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.io.File;
@@ -36,9 +34,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @AutoConfigureMockMvc
-@SpringBootTest(classes = {ShortenedUrlApplication.class})
-@ActiveProfiles("test")
-public class ShortenedUrlControllerTest {
+public class ShortenedUrlControllerTest extends AbstractTest {
 
     @Autowired
     public MessageSource messageSource;

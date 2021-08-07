@@ -18,12 +18,20 @@ public class IdFactoryImpl implements IdFactory {
     private long lastTimeMillis;
     private long discriminator;
 
+    /**
+     *
+     * @throws UnknownHostException
+     */
     public IdFactoryImpl() throws UnknownHostException {
         this.hostName = InetAddress.getLocalHost().getHostName();
         this.creationTimeMillis = System.currentTimeMillis();
         this.lastTimeMillis = creationTimeMillis;
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public String generateAndGetIdentifier() {
         String initialReference = StringUtils.EMPTY;
@@ -37,7 +45,7 @@ public class IdFactoryImpl implements IdFactory {
         String newReference = String.format("%s-%d-%d-%d", hostName, creationTimeMillis, currentTimeMillis, discriminator);
         lastTimeMillis = currentTimeMillis;
         boolean exchanged = uniqueUrlIdentifier.compareAndSet(initialReference, newReference);
-        log.debug("Url identifier isExchanged? : {} ",exchanged);
+        log.debug("Url identifier isExchanged? : {} ", exchanged);
         return uniqueUrlIdentifier.get();
     }
 

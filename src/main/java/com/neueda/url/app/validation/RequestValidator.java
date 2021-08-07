@@ -18,6 +18,10 @@ public class RequestValidator {
 
     private final MessageSource messageSource;
 
+    /**
+     *
+     * @param url
+     */
     public void validateRequestUrl(String url) {
         if (StringUtils.isEmpty(url)) {
             throw new BadUrlException(messageSource.getMessage(ServiceMessage.ValidationMessageSourceCode.URL_NOT_EMPTY, null, Locale.ENGLISH));

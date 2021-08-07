@@ -28,7 +28,7 @@ public class UrlServiceImpl implements UrlService {
 
     private final ShortenedUrlRepository shortenedUrlRepository;
     private final IdFactory idFactoryImpl;
-    private final RequestValidator urlValidator;
+    private final RequestValidator requestValidator;
     private final UrlMapStructMapper urlMapStructMapper;
     private final MessageSource messageSource;
 
@@ -41,15 +41,22 @@ public class UrlServiceImpl implements UrlService {
     @Value("${server.port}")
     private String serverPort;
 
+    /**
+     * 
+     * @param url
+     * @return
+     */
     @Override
     public UrlResponse persistentUrlDetails(String url) {
-        urlValidator.validateRequestUrl(url);
+        requestValidator.validateRequestUrl(url);
         log.debug("Validation for {} requested url is done.", url);
         try {
             UrlEntity urlEntityObj = Optional.ofNullable(shortenedUrlRepository.getShortenedUrlByUrl(url)).orElseGet(() -> {
                 log.debug("Requested url {} entry is not found in database", url);
                 UrlEntity urlEntity = populateUrlEntity(url);
-                log.debug("Url entity is populated to save into database with id:{}", urlEntity.getUrlId());
+                log.debug("Url entity is populated to save into database with id:{}, urlIdentifier:{}, url:{}," +
+                                " shortenedUrl:{}, createdOn:{},lastAccessedOn:{}", urlEntity.getUrlId(), urlEntity.getUrlIdentifier(), urlEntity.getUrl(),
+                        urlEntity.getShortenedUrl(), urlEntity.getCreatedOn(), urlEntity.getLastAccessedOn());
                 return shortenedUrlRepository.save(urlEntity);
             });
             return urlMapStructMapper.toUrlResponse(urlEntityObj);
@@ -59,12 +66,22 @@ public class UrlServiceImpl implements UrlService {
         }
     }
 
+    /**
+     *
+     * @param urlIdentifier
+     * @return
+     */
     @Override
     public UrlResponse getUrlResponseByUrlIdentifier(String urlIdentifier) {
         return Optional.ofNullable(updateAndGetUrlStatistics(urlIdentifier))
                 .orElseThrow(() -> new UrlNotFoundException(messageSource.getMessage(ServiceMessage.BusinessMessageSourceCode.URL_NOT_FOUND_EXCEPTION, null, Locale.ENGLISH)));
     }
 
+    /**
+     *
+     * @param urlIdentifier
+     * @return
+     */
     private UrlResponse updateAndGetUrlStatistics(String urlIdentifier) {
         UrlEntity urlEntity = shortenedUrlRepository.getUrlEntityByUrlIdentifier(urlIdentifier);
         long hitCount = urlEntity.getTotalNumberOfHits();
@@ -74,6 +91,11 @@ public class UrlServiceImpl implements UrlService {
         return urlMapStructMapper.toUrlResponse(shortenedUrlRepository.save(urlEntity));
     }
 
+    /**
+     *
+     * @param urlIdentifier
+     * @return
+     */
     @Override
     public UrlStatistics getUrlStatisticsByUrlIdentifier(String urlIdentifier) {
         return Optional.ofNullable(
@@ -81,6 +103,11 @@ public class UrlServiceImpl implements UrlService {
                 .orElseThrow(() -> new UrlNotFoundException(messageSource.getMessage(ServiceMessage.BusinessMessageSourceCode.URL_NOT_FOUND_EXCEPTION, null, Locale.ENGLISH)));
     }
 
+    /**
+     *
+     * @param url
+     * @return
+     */
     private UrlEntity populateUrlEntity(String url) {
         UrlEntity urlEntity = new UrlEntity();
         String urlIdentifier = idFactoryImpl.generateAndGetIdentifier();
