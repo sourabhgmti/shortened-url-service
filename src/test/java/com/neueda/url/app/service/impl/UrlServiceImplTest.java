@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
 
 public class UrlServiceImplTest extends AbstractTest {
 
-    public static final String UNEXPECTED_EXCEPTION_OCCURRED = "Unexpected exception occurred.";
     public static final String API_SERVICE_EXCEPTION_OCCURRED = "Api service exception occurred.";
 
     @InjectMocks
