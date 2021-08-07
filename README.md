@@ -129,7 +129,7 @@ Working with dockerfile
 
 11. To login into container we have :
 
-   ` docker exec -it sourabhgmti/shortened-url-service sh`
+   ` docker exec -it shortened-url-app sh`
 
 12. we can push docker image with following command :
 
@@ -138,6 +138,11 @@ Working with dockerfile
 
     for example :
     docker push sourabhgmti/shortened-url-service:latest`
+
+13. We can pull this image as well like below : 
+
+    `docker pull sourabhgmti/shortened-url-service:latest`
+    
 
 
 
