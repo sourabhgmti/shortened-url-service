@@ -109,7 +109,6 @@ public class ShortenedUrlControllerTest extends AbstractTest {
 
     @Test
     public void testRedirectToActualUrlForNonExistingEntity() throws Exception {
-        doReturn(getMockedUrlEntity()).when(shortenedUrlRepository).getUrlEntityByUrlIdentifier(any());
         mockMvc.perform(
                         get("/url/DESKTOP-KMGDPMC-1627910318573-1627910403703-0"))
                 .andDo(print())

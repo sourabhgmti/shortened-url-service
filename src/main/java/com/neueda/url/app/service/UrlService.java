@@ -9,7 +9,7 @@ public interface UrlService {
 
     UrlResponse persistentUrlDetails(String url);
 
-    UrlResponse getUrlResponseByUrlIdentifier(String urlIdentifier);
+    UrlResponse updateAndGetUrlStatistics(String urlIdentifier);
 
     UrlStatistics getUrlStatisticsByUrlIdentifier(String urlIdentifier);
 }

@@ -42,7 +42,6 @@ public class UrlServiceImpl implements UrlService {
     private String serverPort;
 
     /**
-     * 
      * @param url
      * @return
      */
@@ -67,23 +66,13 @@ public class UrlServiceImpl implements UrlService {
     }
 
     /**
-     *
      * @param urlIdentifier
      * @return
      */
     @Override
-    public UrlResponse getUrlResponseByUrlIdentifier(String urlIdentifier) {
-        return Optional.ofNullable(updateAndGetUrlStatistics(urlIdentifier))
+    public UrlResponse updateAndGetUrlStatistics(String urlIdentifier) {
+        UrlEntity urlEntity = Optional.ofNullable(shortenedUrlRepository.getUrlEntityByUrlIdentifier(urlIdentifier))
                 .orElseThrow(() -> new UrlNotFoundException(messageSource.getMessage(ServiceMessage.BusinessMessageSourceCode.URL_NOT_FOUND_EXCEPTION, null, Locale.ENGLISH)));
-    }
-
-    /**
-     *
-     * @param urlIdentifier
-     * @return
-     */
-    private UrlResponse updateAndGetUrlStatistics(String urlIdentifier) {
-        UrlEntity urlEntity = shortenedUrlRepository.getUrlEntityByUrlIdentifier(urlIdentifier);
         long hitCount = urlEntity.getTotalNumberOfHits();
         urlEntity.setTotalNumberOfHits(++hitCount);
         urlEntity.setLastAccessedOn(new Date());
@@ -92,7 +81,6 @@ public class UrlServiceImpl implements UrlService {
     }
 
     /**
-     *
      * @param urlIdentifier
      * @return
      */
@@ -104,7 +92,6 @@ public class UrlServiceImpl implements UrlService {
     }
 
     /**
-     *
      * @param url
      * @return
      */

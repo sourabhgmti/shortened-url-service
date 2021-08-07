@@ -43,7 +43,7 @@ public class ShortenedUrlController {
      */
     @GetMapping("/{urlIdentifier}")
     public ResponseEntity<Object> redirectToActualUrl(@PathVariable String urlIdentifier) {
-        UrlResponse urlResponse=urlServiceImpl.getUrlResponseByUrlIdentifier(urlIdentifier);
+        UrlResponse urlResponse=urlServiceImpl.updateAndGetUrlStatistics(urlIdentifier);
         return ResponseEntity
                 .status(HttpStatus.MOVED_PERMANENTLY)
                 .header(HttpHeaders.LOCATION, urlResponse.getUrl())
