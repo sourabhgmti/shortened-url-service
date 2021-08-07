@@ -11,37 +11,34 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
-     *
      * @param badUrlException
      * @param webRequest
      * @return
      */
     @ExceptionHandler({BadUrlException.class})
-    public final ResponseEntity<Error> prepareAndReturnBadUrlExceptionResponse(BadUrlException badUrlException, WebRequest webRequest) {
+    public final ResponseEntity<Error> populateBadUrlExceptionResponse(BadUrlException badUrlException, WebRequest webRequest) {
         Error error = new Error(badUrlException.getMessage(), webRequest.getDescription(false));
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
     }
 
     /**
-     *
-     * @param urlServiceException
+     * @param apiServiceException
      * @param webRequest
      * @return
      */
     @ExceptionHandler({ApiServiceException.class})
-    public final ResponseEntity<Error> prepareAndReturnInvalidUrlExceptionResponse(ApiServiceException urlServiceException, WebRequest webRequest) {
-        Error error = new Error(urlServiceException.getMessage(), webRequest.getDescription(false));
+    public final ResponseEntity<Error> populateApiServiceExceptionResponse(ApiServiceException apiServiceException, WebRequest webRequest) {
+        Error error = new Error(apiServiceException.getMessage(), webRequest.getDescription(false));
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     /**
-     *
      * @param urlNotFoundException
      * @param webRequest
      * @return
      */
     @ExceptionHandler({UrlNotFoundException.class})
-    public final ResponseEntity<Error> prepareAndReturnUrlNotFoundExceptionResponse(UrlNotFoundException urlNotFoundException, WebRequest webRequest) {
+    public final ResponseEntity<Error> populateUrlNotFoundExceptionResponse(UrlNotFoundException urlNotFoundException, WebRequest webRequest) {
         Error error = new Error(urlNotFoundException.getMessage(), webRequest.getDescription(false));
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }

@@ -1,7 +1,6 @@
 package com.neueda.url.app.service.impl;
 
 import com.neueda.url.app.AbstractTest;
-import com.neueda.url.app.ShortenedUrlApplication;
 import com.neueda.url.app.entities.UrlEntity;
 import com.neueda.url.app.exception.ApiServiceException;
 import com.neueda.url.app.factory.impl.IdFactoryImpl;
@@ -12,9 +11,7 @@ import com.neueda.url.app.validation.RequestValidator;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.MessageSource;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Date;
 
@@ -27,7 +24,9 @@ import static org.mockito.Mockito.when;
 
 public class UrlServiceImplTest extends AbstractTest {
 
-    public static final String UNEXPECTED_EXCEPTION_OCCURRED = "Unexpected exception occurred";
+    public static final String UNEXPECTED_EXCEPTION_OCCURRED = "Unexpected exception occurred.";
+    public static final String API_SERVICE_EXCEPTION_OCCURRED = "Api service exception occurred.";
+
     @InjectMocks
     private UrlServiceImpl UrlServiceImpl;
 
@@ -75,13 +74,13 @@ public class UrlServiceImplTest extends AbstractTest {
     }
 
     @Test
-    public void testPersistentUrlDetailsWhenUnexpectedException() {
+    public void testPersistentUrlDetailsWhenApiServiceException() {
         when(shortenedUrlRepository.save(any())).thenReturn(getMockedUrlEntityObj());
         when(urlMapStructMapper.toUrlResponse(any())).thenReturn(getMockedUrlResponseObj());
-        when(idFactoryImpl.generateAndGetIdentifier()).thenThrow(new RuntimeException(UNEXPECTED_EXCEPTION_OCCURRED));
-        when(messageSource.getMessage(any(), any(), any())).thenReturn(UNEXPECTED_EXCEPTION_OCCURRED);
+        when(idFactoryImpl.generateAndGetIdentifier()).thenThrow(new ApiServiceException(API_SERVICE_EXCEPTION_OCCURRED));
+        when(messageSource.getMessage(any(), any(), any())).thenReturn(API_SERVICE_EXCEPTION_OCCURRED);
         Throwable exception = assertThrows(ApiServiceException.class, () -> UrlServiceImpl.persistentUrlDetails("http://bit.ly/SaaYw5"));
-        assertEquals(UNEXPECTED_EXCEPTION_OCCURRED, exception.getMessage());
+        assertEquals(API_SERVICE_EXCEPTION_OCCURRED, exception.getMessage());
     }
 
     private UrlEntity getMockedUrlEntityObj() {

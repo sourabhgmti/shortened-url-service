@@ -1,0 +1,33 @@
+### Run with "develop" environment
+
+POST {{host}}/shortened-url-service/url/short
+Content-Type: application/json
+Accept: application/json
+
+{
+  "url": "https://www.independent.co.uk/life-style/how-iron-shirt-creases-jeeves-dry-cleaners-a8857046.html"
+}
+
+
+### Response sample is as below, Now can hit shortenedUrl that would be redirected to it's actual url (https://www.independent.co.uk/life-style/how-iron-shirt-creases-jeeves-dry-cleaners-a8857046.html)
+###{
+###  "url": "https://www.independent.co.uk/life-style/how-iron-shirt-creases-jeeves-dry-cleaners-a8857046.html",
+###  "shortenedUrl": "http://localhost:8080/shortened-url-service/url/DESKTOP-KMGDPMC-1628361051332-1628361690254-0"
+###}
+
+GET {{host}}/shortened-url-service/url/DESKTOP-KMGDPMC-1628361051332-1628361690254-0
+Accept: application/json
+
+###
+
+GET {{host}}/shortened-url-service/url/DESKTOP-KMGDPMC-1628361051332-1628361690254-0/stat
+Accept: application/json
+
+###  Response with url Statistics
+###{
+###  "url": "https://www.independent.co.uk/life-style/how-iron-shirt-creases-jeeves-dry-cleaners-a8857046.html",
+###  "shortenedUrl": "http://localhost:8080/shortened-url-service/url/DESKTOP-KMGDPMC-1628361051332-1628361690254-0",
+###  "createdOn": "8/8/21 12:11 AM",
+###  "totalNumberOfHits": "2",
+###  "lastAccessedOn": "8/8/21 12:19 AM"
+###}
